@@ -30,6 +30,31 @@ android {
         versionName = flutter.versionName
     }
 
+    flavorDimensions += "default"
+
+    productFlavors {
+        create("production") {
+            dimension = "default"
+            resValue("string", "app_name", "Flutter Pokedex")
+            applicationIdSuffix = ""
+        }
+
+        create("staging") {
+            dimension = "default"
+            resValue("string", "app_name", "[STAGING] Flutter Pokedex")
+            applicationIdSuffix = ".stg"
+            versionNameSuffix = ".stg"
+        }
+
+        create("development") {
+            dimension = "default"
+            resValue("string", "app_name", "[DEV] Flutter Pokedex")
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = ".dev"
+        }
+    }
+
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
@@ -37,6 +62,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+    
 }
 
 flutter {

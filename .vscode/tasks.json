@@ -19,5 +19,35 @@
             "group": "build",
             "label": "dart pub run build_runner build",
         },
+
+        {
+            "label": "Run Flutter with Flavor & Device Selection",
+            "type": "shell",
+            "command": "flutter",
+            "args": [
+                "run",
+                "--flavor",
+                "${input:flavor}",
+                "--target",
+                "lib/main_${input:flavor}.dart",
+                "-d",
+                "${input:deviceId}"
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+        "id": "flavor",
+        "type": "pickString",
+        "description": "Select the flavor",
+        "options": ["development", "staging", "production"],
+        "default": "development"
+        },
+        {
+        "id": "deviceId",
+        "type": "promptString",
+        "description": "Enter Device ID (Run 'flutter devices' to see available devices)"
+        }
     ]
 }
