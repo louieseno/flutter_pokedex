@@ -1,24 +1,22 @@
 part of 'home_view_bloc.dart';
 
-@immutable
-sealed class HomeViewState {
-  const HomeViewState();
-}
+enum HomeViewStatus { loading, fetchMore, success, failure }
 
-final class Initial extends HomeViewState {
-  const Initial();
-}
+@freezed
+sealed class HomeViewState with _$HomeViewState {
+  const factory HomeViewState({
+    required HomeViewStatus status,
+    required List<PokemonDetails> pokemons,
+    String? error,
+    @Default(false) bool fetchMore,
+  }) = _HomeViewState;
 
-final class Loading extends HomeViewState {
-  const Loading();
-}
-
-final class Success extends HomeViewState {
-  final List<Pokemon> pokemons;
-  const Success(this.pokemons);
-}
-
-final class Failure extends HomeViewState {
-  final String error;
-  const Failure(this.error);
+  factory HomeViewState.initial() {
+    return const HomeViewState(
+      status: HomeViewStatus.loading,
+      pokemons: [],
+      error: null,
+      fetchMore: false,
+    );
+  }
 }

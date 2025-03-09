@@ -1,10 +1,7 @@
 part of 'home_view_bloc.dart';
 
-@immutable
-sealed class HomeViewEvent {
-  const HomeViewEvent();
-}
-
-class FetchPokemons extends HomeViewEvent {
-  const FetchPokemons();
+@freezed
+sealed class HomeViewEvent with _$HomeViewEvent {
+  const factory HomeViewEvent.fetchPokemons() = _FetchPokemons;
+  const factory HomeViewEvent.fetchNextPokemons() = _FetchNextPokemons;
 }
