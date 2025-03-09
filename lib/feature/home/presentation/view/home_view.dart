@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.title});
+
+@immutable
+class HomeViewRoute extends GoRouteData {
+  static const path = '/home';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const _HomeView(title: 'Flutter Pokedex');
+}
+
+class _HomeView extends StatefulWidget {
+  const _HomeView({required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -15,10 +26,10 @@ class HomeView extends StatefulWidget {
   final String title;
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<_HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<_HomeView> {
   int _counter = 0;
 
   void _incrementCounter() {
