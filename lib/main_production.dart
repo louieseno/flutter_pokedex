@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_pokedex/bootstrap.dart';
-import 'package:flutter_pokedex/flutter_pokedex_app.dart';
+import 'package:flutter_pokedex/feature/home/data/repositories/pokemons/pokemons_repository_remote.dart';
+import 'package:flutter_pokedex/feature/home/data/services/api/api_client.dart';
 
 /// {@template main_production}
 /// The entry point for the development environment of the Flutter Pokedex app.
@@ -7,6 +10,8 @@ import 'package:flutter_pokedex/flutter_pokedex_app.dart';
 /// This initializes the app using the [bootstrap] function to set up
 /// error handling, state management, and cross-flavor configurations.
 /// {@endtemplate}
-void main() {
-  bootstrap(() => const FlutterPokedexApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
+  bootstrap(pokemonsDataRepository: PokemonsRepositoryRemote(apiClient: ApiClient()));
 }

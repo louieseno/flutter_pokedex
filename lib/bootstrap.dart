@@ -1,8 +1,10 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_pokedex/feature/home/data/repositories/pokemons/pokemons_data_repository.dart';
+import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/flutter_pokedex_app.dart';
 
 /// {@template app_bloc_observer}
 /// A custom [BlocObserver] that logs state changes and errors for all BLoCs.
@@ -41,7 +43,7 @@ class AppBlocObserver extends BlocObserver {
 ///
 /// This ensures proper error handling and state management setup before launching the app.
 /// {@endtemplate}
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+void bootstrap({required PokemonsDataRepository pokemonsDataRepository}) {
   // Capture and log Flutter framework errors.
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -49,8 +51,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Set up the global Bloc observer for state monitoring.
   Bloc.observer = const AppBlocObserver();
 
-  // Add cross-flavor configuration here
+  /// Add cross-flavor configuration here
 
-  // Run the app with the provided widget builder.
-  runApp(await builder());
+  ///! Note: Currently all flavors using same API.
+  final pokemonRepository = PokemonsRepository(pokemonsDataRepository: pokemonsDataRepository);
+
+  runApp(FlutterPokedexApp(pokemonsRepository: pokemonRepository));
 }

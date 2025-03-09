@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/core/routes/app_route.dart';
-
-/// {@template flutter_pokedex_app}
-/// The root widget of the Flutter Pokedex app.
-///
-/// This widget sets up the application with a [MaterialApp], defining the
-/// app's theme and the home screen.
-/// {@endtemplate}
-void main() {
-  runApp(const FlutterPokedexApp());
-}
+import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
 
 class FlutterPokedexApp extends StatelessWidget {
-  const FlutterPokedexApp({super.key});
+  const FlutterPokedexApp({required this.pokemonsRepository, super.key});
+  final PokemonsRepository pokemonsRepository;
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider.value(value: pokemonsRepository, child: const _AppView());
+  }
+}
+
+class _AppView extends StatelessWidget {
+  const _AppView();
 
   @override
   Widget build(BuildContext context) {
