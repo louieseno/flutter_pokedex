@@ -2,9 +2,9 @@ name: Flutter CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
 
 jobs:
   lint-and-test:
@@ -15,25 +15,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install FVM
-        run: |
-          dart pub global activate fvm
-
-      - name: Setup Flutter with FVM
-        run: |
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          fvm install
-          fvm use
-          echo "FVM configured with Flutter $(fvm flutter --version)"
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+          cache: true
 
       - name: Install dependencies
-        run: fvm flutter pub get
+        run: flutter pub get
 
       - name: Run Flutter linting
-        run: fvm flutter analyze
+        run: flutter analyze
 
       - name: Run tests with coverage
-        run: fvm flutter test --coverage --test-randomize-ordering-seed random
+        run: flutter test --coverage --test-randomize-ordering-seed random
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
