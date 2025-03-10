@@ -134,13 +134,15 @@ A Flutter app that utilizes a free open API to view Pokémon, search for specifi
 
 ## Usage 📱
 
-This project contains 3 flavors:
+This project contains 3 flavors (only supported for iOS and Android):
 
 - development
 - staging
 - production
 
-To run the desired flavor either use the launch configuration in VSCode/Android Studio
+_macOS_ flavor support has not been configured.
+
+To run the desired flavor either use the launch configuration in VSCode
 or use the following commands:
 
 ```bash
