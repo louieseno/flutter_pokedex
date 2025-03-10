@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/ui/common_widgets/retry_widget.dart';
 import 'package:flutter_pokedex/ui/home/controller/home_view/home_view_bloc.dart';
 import 'package:flutter_pokedex/ui/home/view/pokemon_card.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,8 @@ class HomeViewRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return BlocProvider(
+    return BlocProvider<HomeViewBloc>(
+      lazy: false,
       create:
           (context) =>
               HomeViewBloc(repository: context.read<PokemonsRepository>())
@@ -92,7 +94,7 @@ class _HomeViewState extends State<_HomeView> {
                     case HomeViewStatus.loading:
                       return const Center(child: CircularProgressIndicator());
                     case HomeViewStatus.failure:
-                      return _RetryWidget(
+                      return RetryWidget(
                         label: 'Error: ${state.error}',
                         onRetry:
                             () => context.read<HomeViewBloc>().add(
@@ -101,7 +103,7 @@ class _HomeViewState extends State<_HomeView> {
                       );
                     case HomeViewStatus.success || HomeViewStatus.fetchMore:
                       if (state.pokemons.isEmpty) {
-                        return _RetryWidget(
+                        return RetryWidget(
                           label: 'No Pokemon Found',
                           onRetry: () => _onSearchChanged(_searchController.text),
                         );
@@ -151,30 +153,5 @@ class _HomeViewState extends State<_HomeView> {
     _scrollDebounceTimer?.cancel();
     _searchDebounceTimer?.cancel();
     super.dispose();
-  }
-}
-
-class _RetryWidget extends StatelessWidget {
-  const _RetryWidget({required this.label, required this.onRetry});
-  final String label;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        spacing: 10,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(label, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-
-          ElevatedButton.icon(
-            onPressed: onRetry,
-            icon: Icon(Icons.refresh),
-            label: Text('Try Again'),
-          ),
-        ],
-      ),
-    );
   }
 }

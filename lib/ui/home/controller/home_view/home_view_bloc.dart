@@ -10,7 +10,6 @@ part 'home_view_state.dart';
 part 'home_view_bloc.freezed.dart';
 
 class HomeViewBloc extends Bloc<HomeViewEvent, HomeViewState> {
-  final PokemonsRepository repository;
   HomeViewBloc({required this.repository}) : super(HomeViewState.initial()) {
     on<_FetchPokemons>((event, emit) async {
       emit(state.copyWith(status: HomeViewStatus.loading));
@@ -55,4 +54,7 @@ class HomeViewBloc extends Bloc<HomeViewEvent, HomeViewState> {
       }
     });
   }
+
+  @protected
+  final PokemonsRepository repository;
 }

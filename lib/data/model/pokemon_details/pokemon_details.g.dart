@@ -19,3 +19,15 @@ _TypeDetail _$TypeDetailFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TypeDetailToJson(_TypeDetail instance) =>
     <String, dynamic>{'name': instance.name, 'url': instance.url};
+
+_AbilityDetail _$AbilityDetailFromJson(Map<String, dynamic> json) =>
+    _AbilityDetail(name: json['name'] as String, url: json['url'] as String);
+
+Map<String, dynamic> _$AbilityDetailToJson(_AbilityDetail instance) =>
+    <String, dynamic>{'name': instance.name, 'url': instance.url};
+
+_StatDetail _$StatDetailFromJson(Map<String, dynamic> json) =>
+    _StatDetail(name: json['name'] as String, url: json['url'] as String);
+
+Map<String, dynamic> _$StatDetailToJson(_StatDetail instance) =>
+    <String, dynamic>{'name': instance.name, 'url': instance.url};

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/ui/home/view/home_view.dart';
+import 'package:flutter_pokedex/ui/pokemon/view/pokemon_details_view.dart';
 import 'package:go_router/go_router.dart';
 
 part 'app_route.g.dart';
@@ -16,7 +17,12 @@ part 'app_route.g.dart';
 /// {@endtemplate}
 @TypedGoRoute<RootRoute>(
   path: RootRoute.path,
-  routes: [TypedGoRoute<HomeViewRoute>(path: HomeViewRoute.path)],
+  routes: [
+    TypedGoRoute<HomeViewRoute>(
+      path: HomeViewRoute.path,
+      routes: [TypedGoRoute<PokemonDetailsViewRoute>(path: PokemonDetailsViewRoute.path)],
+    ),
+  ],
 )
 class RootRoute extends GoRouteData {
   /// {@macro root_route}

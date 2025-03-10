@@ -77,7 +77,8 @@ final class ApiClient {
   Future<Result<PokemonDetails?>> searchPokemonByName(String name) async {
     try {
       final client = _clientFactory();
-      final response = await client.get('$_baseUrl/pokemon/$name');
+      final response = await client.get('$_baseUrl/pokemon/${name.toLowerCase()}');
+
       // Assuming the API returns a single PokemonDetails object
       return Result.ok(PokemonDetails.fromJson(response.data));
     } on DioException catch (e) {
