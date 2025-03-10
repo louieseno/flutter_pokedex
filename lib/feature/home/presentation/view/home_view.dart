@@ -33,8 +33,8 @@ class _HomeView extends StatefulWidget {
 class _HomeViewState extends State<_HomeView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
-  Timer? _debounceTimer;
+  Timer? _scrollDebounceTimer;
+  Timer? _searchDebounceTimer;
 
   @override
   void initState() {
@@ -44,16 +44,21 @@ class _HomeViewState extends State<_HomeView> {
 
   void _onScroll() {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
-      if (_debounceTimer?.isActive ?? false) _debounceTimer?.cancel();
-      _debounceTimer = Timer(const Duration(milliseconds: 50), () {
+      if (_scrollDebounceTimer?.isActive ?? false) _scrollDebounceTimer?.cancel();
+      _scrollDebounceTimer = Timer(const Duration(milliseconds: 50), () {
         context.read<HomeViewBloc>().add(const HomeViewEvent.fetchNextPokemons());
       });
     }
   }
 
   void _onSearchChanged(String query) {
-    setState(() {
-      _searchQuery = query;
+    if (_searchDebounceTimer?.isActive ?? false) _searchDebounceTimer?.cancel();
+    _searchDebounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (query.isEmpty) {
+        context.read<HomeViewBloc>().add(const HomeViewEvent.fetchPokemons());
+        return;
+      }
+      context.read<HomeViewBloc>().add(HomeViewEvent.searchPokemonByName(query));
     });
   }
 
@@ -87,31 +92,46 @@ class _HomeViewState extends State<_HomeView> {
                     case HomeViewStatus.loading:
                       return const Center(child: CircularProgressIndicator());
                     case HomeViewStatus.failure:
-                      return _RefreshIndicatorContainer(
-                        builder: (context) => Center(child: Text("Error: ${state.error}")),
+                      return _RetryWidget(
+                        label: 'Error: ${state.error}',
+                        onRetry:
+                            () => context.read<HomeViewBloc>().add(
+                              const HomeViewEvent.fetchNextPokemons(),
+                            ),
                       );
                     case HomeViewStatus.success || HomeViewStatus.fetchMore:
-                      return _RefreshIndicatorContainer(
-                        builder:
-                            (context) => ListView.builder(
-                              controller: _scrollController,
-                              itemCount:
-                                  state.pokemons.length +
-                                  (state.status == HomeViewStatus.fetchMore
-                                      ? 1
-                                      : 0), // Triggers indicator during lazy loading
-                              itemBuilder: (context, index) {
-                                if (index < state.pokemons.length) {
-                                  final pokemonDetails = state.pokemons[index];
-                                  return PokemonCard(pokemon: pokemonDetails);
-                                } else {
-                                  return const Padding(
-                                    padding: EdgeInsets.only(bottom: 16.0),
-                                    child: Center(child: CircularProgressIndicator()),
-                                  );
-                                }
-                              },
-                            ),
+                      if (state.pokemons.isEmpty) {
+                        return _RetryWidget(
+                          label: 'No Pokemon Found',
+                          onRetry: () => _onSearchChanged(_searchController.text),
+                        );
+                      }
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<HomeViewBloc>().add(
+                            const HomeViewEvent.fetchPokemons(refresh: true),
+                          );
+                          return Future.value();
+                        },
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount:
+                              state.pokemons.length +
+                              (state.status == HomeViewStatus.fetchMore
+                                  ? 1
+                                  : 0), // Triggers indicator during lazy loading
+                          itemBuilder: (context, index) {
+                            if (index < state.pokemons.length) {
+                              final pokemonDetails = state.pokemons[index];
+                              return PokemonCard(pokemon: pokemonDetails);
+                            } else {
+                              return const Padding(
+                                padding: EdgeInsets.only(bottom: 16.0),
+                                child: Center(child: CircularProgressIndicator()),
+                              );
+                            }
+                          },
+                        ),
                       );
                   }
                 },
@@ -125,23 +145,36 @@ class _HomeViewState extends State<_HomeView> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _searchController.dispose();
-    _debounceTimer?.cancel();
+    _scrollDebounceTimer?.cancel();
+    _searchDebounceTimer?.cancel();
     super.dispose();
   }
 }
 
-class _RefreshIndicatorContainer extends StatelessWidget {
-  const _RefreshIndicatorContainer({required this.builder});
-  final WidgetBuilder builder;
+class _RetryWidget extends StatelessWidget {
+  const _RetryWidget({required this.label, required this.onRetry});
+  final String label;
+  final VoidCallback onRetry;
+
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        context.read<HomeViewBloc>().add(const HomeViewEvent.fetchPokemons(refresh: true));
-      },
-      child: builder(context),
+    return Center(
+      child: Column(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(label, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+
+          ElevatedButton.icon(
+            onPressed: onRetry,
+            icon: Icon(Icons.refresh),
+            label: Text('Try Again'),
+          ),
+        ],
+      ),
     );
   }
 }

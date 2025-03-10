@@ -4,4 +4,5 @@ import 'package:flutter_pokedex/feature/home/data/model/pokemon_details/pokemon_
 abstract interface class PokemonsDataRepository {
   Future<Result<List<PokemonDetails>>> fetchPokemons({int? limit, int? offset, refresh = false});
   Future<Result<List<PokemonDetails>>> fetchNextPokemons();
+  Future<Result<PokemonDetails?>> searchPokemonByName(String name);
 }

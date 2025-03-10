@@ -159,6 +159,78 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 
 /// @nodoc
+
+
+class _SearchPokemonByName with DiagnosticableTreeMixin implements HomeViewEvent {
+  const _SearchPokemonByName(this.name);
+  
+
+ final  String name;
+
+/// Create a copy of HomeViewEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SearchPokemonByNameCopyWith<_SearchPokemonByName> get copyWith => __$SearchPokemonByNameCopyWithImpl<_SearchPokemonByName>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'HomeViewEvent.searchPokemonByName'))
+    ..add(DiagnosticsProperty('name', name));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchPokemonByName&&(identical(other.name, name) || other.name == name));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,name);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'HomeViewEvent.searchPokemonByName(name: $name)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SearchPokemonByNameCopyWith<$Res> implements $HomeViewEventCopyWith<$Res> {
+  factory _$SearchPokemonByNameCopyWith(_SearchPokemonByName value, $Res Function(_SearchPokemonByName) _then) = __$SearchPokemonByNameCopyWithImpl;
+@useResult
+$Res call({
+ String name
+});
+
+
+
+
+}
+/// @nodoc
+class __$SearchPokemonByNameCopyWithImpl<$Res>
+    implements _$SearchPokemonByNameCopyWith<$Res> {
+  __$SearchPokemonByNameCopyWithImpl(this._self, this._then);
+
+  final _SearchPokemonByName _self;
+  final $Res Function(_SearchPokemonByName) _then;
+
+/// Create a copy of HomeViewEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
+  return _then(_SearchPokemonByName(
+null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$HomeViewState implements DiagnosticableTreeMixin {
 
  HomeViewStatus get status; List<PokemonDetails> get pokemons; String? get error; bool get fetchMore;

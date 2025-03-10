@@ -20,4 +20,7 @@ class PokemonsRepository {
 
   Future<Result<List<PokemonDetails>>> fetchNextPokemons() =>
       _pokemonsDataRepository.fetchNextPokemons();
+
+  Future<Result<PokemonDetails?>> searchPokemonByName(String name) =>
+      _pokemonsDataRepository.searchPokemonByName(name);
 }

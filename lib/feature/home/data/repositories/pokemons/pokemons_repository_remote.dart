@@ -30,4 +30,14 @@ class PokemonsRepositoryRemote implements PokemonsDataRepository {
       return Result.error(e);
     }
   }
+
+  @override
+  Future<Result<PokemonDetails?>> searchPokemonByName(String name) async {
+    try {
+      _apiClient.resetNextUrl();
+      return await _apiClient.searchPokemonByName(name);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
 }

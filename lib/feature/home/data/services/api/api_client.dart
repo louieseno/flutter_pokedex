@@ -73,6 +73,21 @@ final class ApiClient {
     return fetchPokemons(); // It now uses the _nextUrl.
   }
 
+  /// Search pokemon name
+  Future<Result<PokemonDetails?>> searchPokemonByName(String name) async {
+    try {
+      final client = _clientFactory();
+      final response = await client.get('$_baseUrl/pokemon/$name');
+      // Assuming the API returns a single PokemonDetails object
+      return Result.ok(PokemonDetails.fromJson(response.data));
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        return Result.ok(null); // Pokémon not found
+      }
+      return Result.error(Exception('Failed to search Pokémon: An error occurred'));
+    }
+  }
+
   ///Resets the next Url.
   void resetNextUrl() {
     _nextUrl = null;

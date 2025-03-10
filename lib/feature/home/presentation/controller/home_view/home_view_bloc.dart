@@ -38,5 +38,21 @@ class HomeViewBloc extends Bloc<HomeViewEvent, HomeViewState> {
           emit(state.copyWith(status: HomeViewStatus.failure, error: result.error.toString()));
       }
     });
+
+    on<_SearchPokemonByName>((event, emit) async {
+      emit(state.copyWith(status: HomeViewStatus.loading));
+      final result = await repository.searchPokemonByName(event.name);
+      switch (result) {
+        case Ok<PokemonDetails?>():
+          emit(
+            state.copyWith(
+              status: HomeViewStatus.success,
+              pokemons: result.value != null ? [result.value!] : [],
+            ),
+          );
+        case Error<PokemonDetails?>():
+          emit(state.copyWith(status: HomeViewStatus.failure, error: result.error.toString()));
+      }
+    });
   }
 }
