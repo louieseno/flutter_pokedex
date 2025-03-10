@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
 import 'package:flutter_pokedex/ui/common_widgets/retry_widget.dart';
 import 'package:flutter_pokedex/ui/home/controller/home_view/home_view_bloc.dart';
-import 'package:flutter_pokedex/ui/home/view/pokemon_card.dart';
+import 'package:flutter_pokedex/ui/home/view/widgets/pokemon_card_widget.dart';
 import 'package:go_router/go_router.dart';
 
 @immutable
@@ -125,7 +125,7 @@ class _HomeViewState extends State<_HomeView> {
                           itemBuilder: (context, index) {
                             if (index < state.pokemons.length) {
                               final pokemonDetails = state.pokemons[index];
-                              return PokemonCard(pokemon: pokemonDetails);
+                              return PokemonCardWidget(pokemon: pokemonDetails);
                             } else {
                               return const Padding(
                                 padding: EdgeInsets.only(bottom: 16.0),

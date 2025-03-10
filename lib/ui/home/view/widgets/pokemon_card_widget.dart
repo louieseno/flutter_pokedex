@@ -6,8 +6,8 @@ import 'package:flutter_pokedex/ui/common_widgets/info_row_widget.dart';
 import 'package:flutter_pokedex/ui/common_widgets/type_pill_widget.dart';
 import 'package:flutter_pokedex/ui/pokemon/view/pokemon_details_view.dart';
 
-class PokemonCard extends StatelessWidget with TypeConverterMixin {
-  const PokemonCard({super.key, required this.pokemon});
+class PokemonCardWidget extends StatelessWidget with TypeConverterMixin {
+  const PokemonCardWidget({super.key, required this.pokemon});
   final PokemonDetails pokemon;
 
   @override
