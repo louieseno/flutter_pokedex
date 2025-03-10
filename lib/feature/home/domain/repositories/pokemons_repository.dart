@@ -15,8 +15,8 @@ class PokemonsRepository {
 
   final PokemonsDataRepository _pokemonsDataRepository;
 
-  Future<Result<List<PokemonDetails>>> fetchPokemons({int? limit, int? offset}) =>
-      _pokemonsDataRepository.fetchPokemons(limit: limit, offset: offset);
+  Future<Result<List<PokemonDetails>>> fetchPokemons({int? limit, int? offset, refresh = false}) =>
+      _pokemonsDataRepository.fetchPokemons(limit: limit, offset: offset, refresh: refresh);
 
   Future<Result<List<PokemonDetails>>> fetchNextPokemons() =>
       _pokemonsDataRepository.fetchNextPokemons();

@@ -87,26 +87,31 @@ class _HomeViewState extends State<_HomeView> {
                     case HomeViewStatus.loading:
                       return const Center(child: CircularProgressIndicator());
                     case HomeViewStatus.failure:
-                      return Center(child: Text("Error: ${state.error}"));
+                      return _RefreshIndicatorContainer(
+                        builder: (context) => Center(child: Text("Error: ${state.error}")),
+                      );
                     case HomeViewStatus.success || HomeViewStatus.fetchMore:
-                      return ListView.builder(
-                        controller: _scrollController,
-                        itemCount:
-                            state.pokemons.length +
-                            (state.status == HomeViewStatus.fetchMore
-                                ? 1
-                                : 0), // Triggers indicator during lazy loading
-                        itemBuilder: (context, index) {
-                          if (index < state.pokemons.length) {
-                            final pokemonDetails = state.pokemons[index];
-                            return PokemonCard(pokemon: pokemonDetails);
-                          } else {
-                            return const Padding(
-                              padding: EdgeInsets.only(bottom: 16.0),
-                              child: Center(child: CircularProgressIndicator()),
-                            );
-                          }
-                        },
+                      return _RefreshIndicatorContainer(
+                        builder:
+                            (context) => ListView.builder(
+                              controller: _scrollController,
+                              itemCount:
+                                  state.pokemons.length +
+                                  (state.status == HomeViewStatus.fetchMore
+                                      ? 1
+                                      : 0), // Triggers indicator during lazy loading
+                              itemBuilder: (context, index) {
+                                if (index < state.pokemons.length) {
+                                  final pokemonDetails = state.pokemons[index];
+                                  return PokemonCard(pokemon: pokemonDetails);
+                                } else {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(bottom: 16.0),
+                                    child: Center(child: CircularProgressIndicator()),
+                                  );
+                                }
+                              },
+                            ),
                       );
                   }
                 },
@@ -124,5 +129,19 @@ class _HomeViewState extends State<_HomeView> {
     _searchController.dispose();
     _debounceTimer?.cancel();
     super.dispose();
+  }
+}
+
+class _RefreshIndicatorContainer extends StatelessWidget {
+  const _RefreshIndicatorContainer({required this.builder});
+  final WidgetBuilder builder;
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<HomeViewBloc>().add(const HomeViewEvent.fetchPokemons(refresh: true));
+      },
+      child: builder(context),
+    );
   }
 }

@@ -52,39 +52,73 @@ $HomeViewEventCopyWith(HomeViewEvent _, $Res Function(HomeViewEvent) __);
 
 
 class _FetchPokemons with DiagnosticableTreeMixin implements HomeViewEvent {
-  const _FetchPokemons();
+  const _FetchPokemons({this.refresh = false});
   
 
+@JsonKey() final  bool refresh;
 
-
+/// Create a copy of HomeViewEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FetchPokemonsCopyWith<_FetchPokemons> get copyWith => __$FetchPokemonsCopyWithImpl<_FetchPokemons>(this, _$identity);
 
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'HomeViewEvent.fetchPokemons'))
-    ;
+    ..add(DiagnosticsProperty('refresh', refresh));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchPokemons);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FetchPokemons&&(identical(other.refresh, refresh) || other.refresh == refresh));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,refresh);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'HomeViewEvent.fetchPokemons()';
+  return 'HomeViewEvent.fetchPokemons(refresh: $refresh)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$FetchPokemonsCopyWith<$Res> implements $HomeViewEventCopyWith<$Res> {
+  factory _$FetchPokemonsCopyWith(_FetchPokemons value, $Res Function(_FetchPokemons) _then) = __$FetchPokemonsCopyWithImpl;
+@useResult
+$Res call({
+ bool refresh
+});
 
 
+
+
+}
+/// @nodoc
+class __$FetchPokemonsCopyWithImpl<$Res>
+    implements _$FetchPokemonsCopyWith<$Res> {
+  __$FetchPokemonsCopyWithImpl(this._self, this._then);
+
+  final _FetchPokemons _self;
+  final $Res Function(_FetchPokemons) _then;
+
+/// Create a copy of HomeViewEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? refresh = null,}) {
+  return _then(_FetchPokemons(
+refresh: null == refresh ? _self.refresh : refresh // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

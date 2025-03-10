@@ -14,7 +14,7 @@ class HomeViewBloc extends Bloc<HomeViewEvent, HomeViewState> {
   HomeViewBloc({required this.repository}) : super(HomeViewState.initial()) {
     on<_FetchPokemons>((event, emit) async {
       emit(state.copyWith(status: HomeViewStatus.loading));
-      final result = await repository.fetchPokemons();
+      final result = await repository.fetchPokemons(refresh: event.refresh);
       switch (result) {
         case Ok<List<PokemonDetails>>():
           emit(state.copyWith(status: HomeViewStatus.success, pokemons: result.value));

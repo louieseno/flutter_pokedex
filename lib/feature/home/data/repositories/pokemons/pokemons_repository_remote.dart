@@ -9,8 +9,13 @@ class PokemonsRepositoryRemote implements PokemonsDataRepository {
   final ApiClient _apiClient;
 
   @override
-  Future<Result<List<PokemonDetails>>> fetchPokemons({int? limit, int? offset}) async {
+  Future<Result<List<PokemonDetails>>> fetchPokemons({
+    int? limit,
+    int? offset,
+    refresh = false,
+  }) async {
     try {
+      if (refresh) _apiClient.resetNextUrl();
       return await _apiClient.fetchPokemons(limit: limit ?? 10, offset: offset ?? 0);
     } on Exception catch (e) {
       return Result.error(e);
