@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_pokedex/feature/home/data/repositories/pokemons/pokemons_data_repository.dart';
-import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/data/repositories/pokemons/pokemons_data_repository.dart';
+import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
 import 'package:flutter_pokedex/flutter_pokedex_app.dart';
 
 /// {@template app_bloc_observer}

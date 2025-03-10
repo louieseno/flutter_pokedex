@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_pokedex/bootstrap.dart';
-import 'package:flutter_pokedex/feature/home/data/repositories/pokemons/pokemons_repository_remote.dart';
-import 'package:flutter_pokedex/feature/home/data/services/api/api_client.dart';
+import 'package:flutter_pokedex/data/repositories/pokemons/pokemons_repository_remote.dart';
+import 'package:flutter_pokedex/data/services/api/api_client.dart';
 
 /// {@template main_production}
 /// The entry point for the development environment of the Flutter Pokedex app.

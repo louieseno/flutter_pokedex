@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_pokedex/core/utils/result.dart';
-import 'package:flutter_pokedex/feature/home/data/model/pokemon_details/pokemon_details.dart';
-import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/data/model/pokemon_details/pokemon_details.dart';
+import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_view_event.dart';

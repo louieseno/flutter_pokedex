@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/core/mixins/type_converter_mixin.dart';
 import 'package:flutter_pokedex/core/utils/pokemon_type_colors.dart';
-import 'package:flutter_pokedex/feature/home/data/model/pokemon_details/pokemon_details.dart';
+import 'package:flutter_pokedex/data/model/pokemon_details/pokemon_details.dart';
 
 class PokemonCard extends StatelessWidget with TypeConverterMixin {
   const PokemonCard({super.key, required this.pokemon});

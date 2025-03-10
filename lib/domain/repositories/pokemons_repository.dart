@@ -1,6 +1,6 @@
 import 'package:flutter_pokedex/core/utils/result.dart';
-import 'package:flutter_pokedex/feature/home/data/model/pokemon_details/pokemon_details.dart';
-import 'package:flutter_pokedex/feature/home/data/repositories/pokemons/pokemons_data_repository.dart';
+import 'package:flutter_pokedex/data/model/pokemon_details/pokemon_details.dart';
+import 'package:flutter_pokedex/data/repositories/pokemons/pokemons_data_repository.dart';
 
 /// {@template pokemons_repository}
 /// Repository class for managing Pokémon data.

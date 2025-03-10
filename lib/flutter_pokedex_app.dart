@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/core/routes/app_route.dart';
-import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
 
 class FlutterPokedexApp extends StatelessWidget {
   const FlutterPokedexApp({required this.pokemonsRepository, super.key});

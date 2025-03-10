@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/feature/home/presentation/view/home_view.dart';
+import 'package:flutter_pokedex/ui/home/view/home_view.dart';
 import 'package:go_router/go_router.dart';
 
 part 'app_route.g.dart';

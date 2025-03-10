@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pokedex/feature/home/domain/repositories/pokemons_repository.dart';
-import 'package:flutter_pokedex/feature/home/presentation/controller/home_view/home_view_bloc.dart';
-import 'package:flutter_pokedex/feature/home/presentation/view/pokemon_card.dart';
+import 'package:flutter_pokedex/domain/repositories/pokemons_repository.dart';
+import 'package:flutter_pokedex/ui/home/controller/home_view/home_view_bloc.dart';
+import 'package:flutter_pokedex/ui/home/view/pokemon_card.dart';
 import 'package:go_router/go_router.dart';
 
 @immutable
