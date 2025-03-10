@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_pokedex/core/utils/result.dart';
 import 'package:flutter_pokedex/data/model/pokemon_details/pokemon_details.dart';
 import 'package:flutter_pokedex/data/repositories/pokemons/pokemons_data_repository.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_pokedex/data/services/api/api_client.dart';
 class PokemonsRepositoryRemote implements PokemonsDataRepository {
   PokemonsRepositoryRemote({required ApiClient apiClient}) : _apiClient = apiClient;
 
+  @protected
   final ApiClient _apiClient;
 
   @override

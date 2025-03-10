@@ -7,15 +7,17 @@ import 'package:flutter_pokedex/data/model/pokemon_details/pokemon_details.dart'
 /// {@template api_client}
 /// A simple API client to fetch Pokémon data from the Pokémon API.
 /// {@endtemplate}
-final class ApiClient {
+class ApiClient {
   /// Creates an instance of [ApiClient].
   ///
   /// Optionally accepts a [clientFactory] to provide a custom [Dio],
   /// useful for testing.
-  ApiClient({Dio Function()? clientFactory}) : _clientFactory = clientFactory ?? Dio.new;
+  ApiClient({Dio Function()? clientFactory, String? baseUrl})
+    : _clientFactory = clientFactory ?? Dio.new,
+      _baseUrl = baseUrl ?? dotenv.get('BASE_API_URL');
 
   /// The base URL for the Pokémon API, retrieved from environment variables.
-  static final String _baseUrl = dotenv.get('BASE_API_URL');
+  final String _baseUrl;
 
   /// Factory function to create an [Dio] instance.
   final Dio Function() _clientFactory;
@@ -68,7 +70,7 @@ final class ApiClient {
   /// Fetches the next page of Pokémon using the stored `nextUrl`.
   Future<Result<List<PokemonDetails>>> fetchNextPokemons() async {
     if (_nextUrl == null) {
-      return Result.error(Exception('No next page available.'));
+      return Result.ok([]); // Have reach end limit
     }
     return fetchPokemons(); // It now uses the _nextUrl.
   }
