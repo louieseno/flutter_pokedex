@@ -48,4 +48,6 @@ app.*.map.json
 .fvm/
 
 # env
-.env*
+.env
+
+coverage/
